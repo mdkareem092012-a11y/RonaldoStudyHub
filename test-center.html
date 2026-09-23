@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Centre | Ronaldo's Social Science Study Hub</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+body{background:#07111f;color:#f4f7fb;font-family:Arial,Helvetica,sans-serif;margin:0}
+.test-header{padding:22px 7%;background:#0c1728;border-bottom:1px solid #263b58;position:sticky;top:0;z-index:50}
+.test-header a{color:#48d7ff;text-decoration:none;font-weight:800}
+.test-main{max-width:1120px;margin:auto;padding:38px 18px 70px}
+.hero,.panel{background:#101d31;border:1px solid #263b58;border-radius:14px;padding:25px;margin-bottom:22px}
+.hero{background:linear-gradient(135deg,#142b48,#101d31)}
+.eyebrow{color:#48d7ff;font-size:11px;font-weight:800;letter-spacing:2px}
+h1{font-size:clamp(30px,5vw,52px);line-height:1.15;margin:10px 0}
+h2{color:#48d7ff}
+.muted{color:#aab8ca}
+.test-selector{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0}
+.test-option{background:#101d31;border:1px solid #263b58;border-radius:12px;padding:20px;color:#f4f7fb;text-align:left;cursor:pointer}
+.test-option:hover{border-color:#48d7ff;transform:translateY(-2px)}
+.test-option strong{display:block;color:#48d7ff;margin-bottom:8px}
+.topbar{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:20px}
+.timer{padding:9px 13px;border-radius:8px;background:#17314d;color:#48d7ff;font-weight:900}
+.question-card{background:#0b1628;border:1px solid #223753;border-radius:10px;padding:20px;margin:14px 0}
+.question-text{font-weight:800;margin-bottom:13px}
+.option{display:block;padding:9px 10px;margin:8px 0;border-radius:7px;background:#101d31}
+.btn{display:inline-block;border:0;border-radius:7px;padding:11px 17px;font-weight:800;cursor:pointer;background:#48d7ff;color:#06111b}
+.btn.secondary{background:#17314d;color:#48d7ff;border:1px solid #345b7d}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.result-box{display:none;margin-top:20px;padding:20px;border-radius:12px;background:#0b1628;border:1px solid #263b58}
+.result-score{font-size:42px;color:#48d7ff;font-weight:900}
+.review-item{padding:14px 0;border-bottom:1px solid #263b58}
+.correct{color:#68dca1;font-weight:800}
+.incorrect{color:#ff9c91;font-weight:800}
+.history-row{padding:12px 0;border-bottom:1px solid #263b58;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.hidden{display:none!important}
+@media(max-width:900px){.test-selector{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.test-selector{grid-template-columns:1fr}}
+</style>
+    <link rel="stylesheet" href="css/final-polish.css">
+    <link rel="manifest" href="manifest.webmanifest">
+</head>
+<body>
+<header class="test-header"><a href="index.html">&larr; Back to Ronaldo's Study Hub</a></header>
+<main class="test-main">
+<section class="hero">
+<p class="eyebrow">PHASE 3 | TEST CENTRE</p>
+<h1>Practice. Test. Review.</h1>
+<p class="muted">Take chapter tests and mock practice papers, use the timer, check your score instantly, and review your mistakes.</p>
+</section>
+
+<div class="test-selector" id="testSelector"></div>
+
+<section class="panel">
+<div class="topbar">
+<div><h2 id="testTitle">Select a Test</h2><p id="testInfo" class="muted">Choose a test above to begin.</p></div>
+<div class="timer" id="timer">00:00</div>
+</div>
+<div id="questionArea"></div>
+<div class="actions">
+<button class="btn" id="startBtn" onclick="startTest()">Start Test</button>
+<button class="btn secondary hidden" id="submitBtn" onclick="submitTest()">Submit Test</button>
+<button class="btn secondary hidden" id="resetBtn" onclick="resetTest()">Retake Test</button>
+<button class="btn secondary" onclick="goHome()">Home</button>
+</div>
+<div class="result-box" id="resultBox">
+<div class="result-score" id="scoreValue">0%</div>
+<p id="resultSummary"></p>
+<div id="reviewArea"></div>
+</div>
+</section>
+
+<section class="panel">
+<div class="topbar">
+<div><h2>Test History</h2><p class="muted">Saved locally in this browser.</p></div>
+<button class="btn secondary" onclick="clearHistory()">Clear History</button>
+</div>
+<div id="historyArea"></div>
+</section>
+</main>
+<script src="js/test-center.js"></script>
+<script src="js/global.js"></script>
+</body>
+</html>
+

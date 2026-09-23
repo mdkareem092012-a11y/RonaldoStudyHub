@@ -1,0 +1,11 @@
+﻿{
+    "name": "Ronaldo's Class 9 Social Science Study Hub",
+    "short_name": "Ronaldo Study Hub",
+    "start_url": "./index.html",
+    "scope": "./",
+    "display": "standalone",
+    "background_color": "#07111f",
+    "theme_color": "#07111f",
+    "orientation": "portrait-primary",
+    "description": "Class 9 Social Science Study Hub with study material, tests, quizzes and progress tracking."
+}

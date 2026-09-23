@@ -1,0 +1,1223 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Ronaldo's Class 9 Social Science Study Hub</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/final-polish.css">
+
+    <link rel="manifest" href="manifest.webmanifest">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <a href="index.html" class="brand">
+        RONALDO'S
+        <span>STUDY HUB</span>
+    </a>
+
+    <nav class="nav-links">
+
+        <a href="#home">Home</a>
+
+        <a href="#subjects">Subjects</a>
+
+        <a href="#learning">Learning</a>
+
+        <!-- PHASE 3 TEST CENTRE -->
+        <a href="test-center.html">Tests</a>
+        <a href="flashcards.html">Flashcards</a>
+        <a href="quiz-arena.html">Quiz Arena</a>
+        <a href="map-lab.html">Map Lab</a>
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="study-planner.html">Planner</a>
+        <a href="pdf-centre.html">PDF Centre</a>
+        <a href="exam-simulator.html">Exam Simulator</a>
+
+            <a href="settings.html">Settings</a>
+    </nav>
+
+    <button class="theme-button"
+            onclick="toggleTheme()">
+        Dark / Light
+    </button>
+
+</header>
+
+
+<main>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero" id="home">
+
+    <div class="hero-text">
+
+        <p class="eyebrow">
+            CBSE CLASS 9 SOCIAL SCIENCE
+        </p>
+
+        <h1>
+            Explore.
+            <span>Learn.</span>
+            Practise.
+            <span>Achieve.</span>
+        </h1>
+
+        <p class="hero-description">
+
+            Welcome to Ronaldo's Class 9 Social Science
+            Study Hub.
+
+            Study chapters, practise questions,
+            take tests, revise important concepts
+            and track your progress.
+
+        </p>
+
+        <div class="hero-buttons">
+
+            <button
+                class="primary-button"
+                onclick="continueLearning()">
+
+                Continue Learning
+
+            </button>
+
+            <a
+                href="#subjects"
+                class="secondary-button">
+
+                Explore Subjects
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-panel">
+
+        <p class="panel-label">
+            TODAY'S STUDY FOCUS
+        </p>
+
+        <h2 id="heroFocusTitle">
+            Start Your Learning Journey
+        </h2>
+
+        <p id="heroFocusText">
+
+            Choose a subject and begin your
+            first chapter.
+
+        </p>
+
+
+        <div class="mini-progress">
+
+            <div class="progress-header">
+
+                <span>
+                    Overall Progress
+                </span>
+
+                <strong id="heroProgress">
+                    0%
+                </strong>
+
+            </div>
+
+            <div class="progress-track">
+
+                <div
+                    class="progress-fill"
+                    id="heroProgressBar"
+                    style="width:0%;">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     STATS
+========================= -->
+
+<section class="stats">
+
+    <div class="stat-card">
+
+        <strong>
+            4
+        </strong>
+
+        <span>
+            Subjects
+        </span>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <strong>
+            9
+        </strong>
+
+        <span>
+            Current Chapters
+        </span>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <strong id="statsCompleted">
+            0
+        </strong>
+
+        <span>
+            Completed
+        </span>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <strong id="statsScore">
+            0%
+        </strong>
+
+        <span>
+            Best Score
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     SUBJECTS
+========================= -->
+
+<section
+    class="section"
+    id="subjects">
+
+    <div class="section-heading">
+
+        <p class="eyebrow">
+            STUDY LIBRARY
+        </p>
+
+        <h2>
+            Choose Your Subject
+        </h2>
+
+        <p>
+            Explore the four Social Science areas
+            in one place.
+        </p>
+
+    </div>
+
+
+    <div class="subject-grid">
+
+
+        <!-- HISTORY -->
+
+        <article class="subject-card history">
+
+            <div class="subject-number">
+                01
+            </div>
+
+            <div class="subject-symbol">
+                H
+            </div>
+
+            <h3>
+                History
+            </h3>
+
+            <p>
+
+                Explore people, societies,
+                civilizations, events and
+                change over time.
+
+            </p>
+
+            <a
+                href="#chapters"
+                onclick="selectSubject('History')">
+
+                Explore History
+
+            </a>
+
+        </article>
+
+
+        <!-- GEOGRAPHY -->
+
+        <article class="subject-card geography">
+
+            <div class="subject-number">
+                02
+            </div>
+
+            <div class="subject-symbol">
+                G
+            </div>
+
+            <h3>
+                Geography
+            </h3>
+
+            <p>
+
+                Study places, environments,
+                physical features, climate
+                and human-environment
+                relationships.
+
+            </p>
+
+            <a
+                href="#chapters"
+                onclick="selectSubject('Geography')">
+
+                Explore Geography
+
+            </a>
+
+        </article>
+
+
+        <!-- POLITICAL SCIENCE -->
+
+        <article class="subject-card civics">
+
+            <div class="subject-number">
+                03
+            </div>
+
+            <div class="subject-symbol">
+                P
+            </div>
+
+            <h3>
+                Political Science
+            </h3>
+
+            <p>
+
+                Understand democracy,
+                elections, institutions,
+                rights and citizenship.
+
+            </p>
+
+            <a
+                href="#chapters"
+                onclick="selectSubject('Political Science')">
+
+                Explore Political Science
+
+            </a>
+
+        </article>
+
+
+        <!-- ECONOMICS -->
+
+        <article class="subject-card economics">
+
+            <div class="subject-number">
+                04
+            </div>
+
+            <div class="subject-symbol">
+                E
+            </div>
+
+            <h3>
+                Economics
+            </h3>
+
+            <p>
+
+                Learn about choices,
+                resources, markets,
+                production and economic
+                decisions.
+
+            </p>
+
+            <a
+                href="#chapters"
+                onclick="selectSubject('Economics')">
+
+                Explore Economics
+
+            </a>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     SMART LEARNING
+========================= -->
+
+<section
+    class="section learning-section"
+    id="learning">
+
+    <div class="section-heading">
+
+        <p class="eyebrow">
+            SMART LEARNING TOOLS
+        </p>
+
+        <h2>
+            Learn Beyond Reading
+        </h2>
+
+        <p>
+
+            Practice concepts using
+            interactive study tools.
+
+        </p>
+
+    </div>
+
+
+    <div class="tool-grid">
+
+
+        <button
+            class="tool-card"
+            onclick="comingSoon('Quick Revision')">
+
+            <span>
+                01
+            </span>
+
+            <h3>
+                Quick Revision
+            </h3>
+
+            <p>
+                Revise a chapter in a
+                short study session.
+            </p>
+
+        </button>
+
+
+        <button
+            class="tool-card"
+            onclick="comingSoon('Flashcards')">
+
+            <span>
+                02
+            </span>
+
+            <h3>
+                Flashcards
+            </h3>
+
+            <p>
+                Practise definitions,
+                dates, facts and concepts.
+            </p>
+
+        </button>
+
+
+        <button
+            class="tool-card"
+            onclick="comingSoon('Mind Maps')">
+
+            <span>
+                03
+            </span>
+
+            <h3>
+                Mind Maps
+            </h3>
+
+            <p>
+                Connect important ideas
+                visually.
+            </p>
+
+        </button>
+
+
+        <button
+            class="tool-card"
+            onclick="comingSoon('Key Terms Dictionary')">
+
+            <span>
+                04
+            </span>
+
+            <h3>
+                Key Terms
+            </h3>
+
+            <p>
+                Find simple meanings
+                of important terms.
+            </p>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     DAILY CHALLENGE
+========================= -->
+
+<section class="challenge-section">
+
+    <div>
+
+        <p class="eyebrow">
+            DAILY STUDY CHALLENGE
+        </p>
+
+        <h2>
+            10 Questions. One Focus.
+        </h2>
+
+        <p>
+
+            Build a daily revision habit
+            with short Social Science
+            practice sessions.
+
+        </p>
+
+    </div>
+
+
+    <button
+        class="primary-button"
+        onclick="startDailyChallenge()">
+
+        Start Challenge
+
+    </button>
+
+</section>
+
+
+<!-- =========================
+     FEATURED CHAPTER
+========================= -->
+
+<section class="section">
+
+    <div class="feature-layout">
+
+
+        <div>
+
+            <p class="eyebrow">
+                FEATURED CHAPTER
+            </p>
+
+            <h2 id="featuredTitle">
+                Chapter 1
+            </h2>
+
+            <p id="featuredDescription">
+
+                Continue building your Social Science
+                foundation with your available
+                chapter material.
+
+            </p>
+
+            <button
+                class="primary-button"
+                onclick="openFeaturedChapter()">
+
+                Study Featured Chapter
+
+            </button>
+
+        </div>
+
+
+        <div class="feature-box">
+
+            <span>
+                FEATURED
+            </span>
+
+            <strong id="featuredNumber">
+                CHAPTER 01
+            </strong>
+
+            <p id="featuredSubject">
+                Social Science
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CHAPTER LIBRARY
+========================= -->
+
+<section
+    class="section"
+    id="chapters">
+
+    <div class="section-heading">
+
+        <p class="eyebrow">
+            CHAPTER LIBRARY
+        </p>
+
+        <h2>
+            Your Chapters
+        </h2>
+
+        <p>
+
+            Search your currently available
+            chapter collection.
+
+        </p>
+
+    </div>
+
+
+    <div class="chapter-tools">
+
+
+        <input
+            type="text"
+            id="chapterSearch"
+            placeholder="Search chapters..."
+            oninput="filterChapters()">
+
+
+        <select
+            id="subjectFilter"
+            onchange="filterChapters()">
+
+            <option value="All">
+                All Subjects
+            </option>
+
+            <option value="History">
+                History
+            </option>
+
+            <option value="Geography">
+                Geography
+            </option>
+
+            <option value="Political Science">
+                Political Science
+            </option>
+
+            <option value="Economics">
+                Economics
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div
+        class="chapter-grid"
+        id="chapterGrid">
+
+
+        <!-- CHAPTER 1 -->
+
+        <article
+            class="chapter-card"
+            data-subject="Geography"
+            data-title="Understanding Social Science">
+
+            <span class="chapter-tag">
+                CHAPTER 01
+            </span>
+
+            <h3>
+                Understanding Social Science
+            </h3>
+
+            <p>
+                Introduction to Social Science
+                and its major disciplines.
+            </p>
+
+            <a href="chapters/chapter-01.html">
+                Study Chapter
+            </a>
+
+        </article>
+
+
+        <!-- CHAPTER 2 -->
+
+        <article
+            class="chapter-card"
+            data-subject="Geography"
+            data-title="Shaping of the Earth's Surface">
+
+            <span class="chapter-tag">
+                CHAPTER 02
+            </span>
+
+            <h3>
+                Shaping of the Earth's Surface
+            </h3>
+
+            <p>
+                Processes and forces that
+                shape Earth's surface.
+            </p>
+
+            <a href="chapters/chapter-02.html">
+                Study Chapter
+            </a>
+
+        </article>
+
+
+        <!-- CHAPTER 3 -->
+
+        <article
+            class="chapter-card"
+            data-subject="Geography"
+            data-title="Atmosphere and Climate">
+
+            <span class="chapter-tag">
+                CHAPTER 03
+            </span>
+
+            <h3>
+                Atmosphere and Climate
+            </h3>
+
+            <p>
+                Atmosphere, weather,
+                climate and related concepts.
+            </p>
+
+            <a href="chapters/chapter-03.html">
+                Study Chapter
+            </a>
+
+        </article>
+
+
+        <!-- CHAPTER 4 -->
+
+        <article
+            class="chapter-card"
+            data-subject="History"
+            data-title="Early Humans and Beginning of Civilisation">
+
+            <span class="chapter-tag">
+                CHAPTER 04
+            </span>
+
+            <h3>
+                Early Humans and Beginning of Civilisation
+            </h3>
+
+            <p>
+                Early humans, adaptation,
+                farming and civilisation.
+            </p>
+
+            <a href="chapters/chapter-04.html">
+                Study Chapter
+            </a>
+
+        </article>
+
+
+        <!-- CHAPTER 5 -->
+
+        <article
+            class="chapter-card"
+            data-subject="History"
+            data-title="State and Society up to 1000 CE">
+
+            <span class="chapter-tag">
+                CHAPTER 05
+            </span>
+
+            <h3>
+                State and Society up to 1000 CE
+            </h3>
+
+            <p>
+                Political organisation and
+                society in early periods.
+            </p>
+
+            <a href="chapters/chapter-05.html">
+                Study Chapter
+            </a>
+
+        </article>
+
+
+        <!-- CHAPTER 6 -->
+
+        <article
+            class="chapter-card"
+            data-subject="Political Science"
+            data-title="Democracy">
+
+            <span class="chapter-tag">
+                CHAPTER 06
+            </span>
+
+            <h3>
+                Democracy
+            </h3>
+
+            <p>
+                Democratic principles,
+                participation and institutions.
+            </p>
+
+            <a href="chapters/chapter-06.html">
+                Study Chapter
+            </a>
+
+        </article>
+
+
+        <!-- CHAPTER 7 -->
+
+        <article
+            class="chapter-card"
+            data-subject="Political Science"
+            data-title="Elections">
+
+            <span class="chapter-tag">
+                CHAPTER 07
+            </span>
+
+            <h3>
+                Elections
+            </h3>
+
+            <p>
+                Elections, representation
+                and electoral systems.
+            </p>
+
+            <a href="chapters/chapter-07.html">
+                Study Chapter
+            </a>
+
+        </article>
+
+
+        <!-- CHAPTER 8 -->
+
+        <article
+            class="chapter-card"
+            data-subject="Economics"
+            data-title="Building Blocks in Economics">
+
+            <span class="chapter-tag">
+                CHAPTER 08
+            </span>
+
+            <h3>
+                Building Blocks in Economics:
+                The Problem of Choice
+            </h3>
+
+            <p>
+                Scarcity, resources,
+                choice and opportunity cost.
+            </p>
+
+            <a href="chapters/chapter-08.html">
+                Study Chapter
+            </a>
+
+        </article>
+
+
+        <!-- CHAPTER 9 -->
+
+        <article
+            class="chapter-card"
+            data-subject="Economics"
+            data-title="The Price Puzzle">
+
+            <span class="chapter-tag">
+                CHAPTER 09
+            </span>
+
+            <h3>
+                The Price Puzzle:
+                What Drives the Market
+            </h3>
+
+            <p>
+                Demand, supply, prices
+                and market interaction.
+            </p>
+
+            <a href="chapters/chapter-09.html">
+                Study Chapter
+            </a>
+
+        </article>
+
+    </div>
+
+
+    <p
+        id="noResults"
+        class="empty-message">
+
+        No matching chapters found.
+
+    </p>
+
+</section>
+
+
+<!-- =========================
+     TEST SECTION
+========================= -->
+
+<section
+    class="section"
+    id="tests">
+
+    <div class="section-heading">
+
+        <p class="eyebrow">
+            EXAM PREPARATION
+        </p>
+
+        <h2>
+            Test Centre
+        </h2>
+
+        <p>
+
+            Take chapter tests, practice tests
+            and mock examinations.
+
+        </p>
+
+        <a
+            class="primary-button"
+            href="test-center.html">
+
+            Open Test Centre
+
+        </a>
+
+    </div>
+
+
+    <div class="test-grid">
+
+
+        <article class="test-card">
+
+            <span>
+                CHAPTER TEST
+            </span>
+
+            <h3>
+                Chapter Practice
+            </h3>
+
+            <p>
+
+                Practice questions from
+                individual chapters.
+
+            </p>
+
+            <a
+                class="secondary-button"
+                href="test-center.html">
+
+                Start
+
+            </a>
+
+        </article>
+
+
+        <article class="test-card">
+
+            <span>
+                40 MARKS
+            </span>
+
+            <h3>
+                Subject Practice Test
+            </h3>
+
+            <p>
+
+                Mixed Social Science
+                practice questions.
+
+            </p>
+
+            <a
+                class="secondary-button"
+                href="test-center.html">
+
+                Start
+
+            </a>
+
+        </article>
+
+
+        <article class="test-card">
+
+            <span>
+                80 MARKS
+            </span>
+
+            <h3>
+                Mock Practice
+            </h3>
+
+            <p>
+
+                Full-length Social Science
+                mock practice.
+
+            </p>
+
+            <a
+                class="secondary-button"
+                href="test-center.html">
+
+                Start
+
+            </a>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     PROGRESS
+========================= -->
+
+<section
+    class="section"
+    id="progress">
+
+    <div class="section-heading">
+
+        <p class="eyebrow">
+            YOUR PROGRESS
+        </p>
+
+        <h2>
+            Student Progress Overview
+        </h2>
+
+        <p>
+
+            Your progress is stored locally
+            in this browser.
+
+        </p>
+
+    </div>
+
+
+    <div class="progress-layout">
+
+
+        <div class="progress-card">
+
+            <h3>
+                Overall Completion
+            </h3>
+
+            <div class="big-progress">
+
+                <strong id="progressPercent">
+                    0%
+                </strong>
+
+            </div>
+
+
+            <div class="progress-track large">
+
+                <div
+                    class="progress-fill"
+                    id="mainProgressBar"
+                    style="width:0%;">
+
+                </div>
+
+            </div>
+
+
+            <p id="progressText">
+
+                0 of 9 chapters completed.
+
+            </p>
+
+        </div>
+
+
+        <div class="progress-card">
+
+            <h3>
+                Study Status
+            </h3>
+
+
+            <div class="progress-row">
+
+                <span>
+                    Completed Chapters
+                </span>
+
+                <strong id="completedCount">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="progress-row">
+
+                <span>
+                    Best Test Score
+                </span>
+
+                <strong id="bestScore">
+                    0%
+                </strong>
+
+            </div>
+
+
+            <div class="progress-row">
+
+                <span>
+                    Study Streak
+                </span>
+
+                <strong id="studyStreak">
+                    0 days
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <div class="footer-brand">
+
+        RONALDO'S CLASS 9
+        SOCIAL SCIENCE STUDY HUB
+
+    </div>
+
+    <p>
+        Explore. Learn. Practise. Achieve.
+    </p>
+
+    <p>
+        Made by Ronaldo
+    </p>
+
+</footer>
+
+
+<script src="js/global.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+

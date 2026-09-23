@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notes and Downloads | Ronaldo's Study Hub</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#07111f;color:#f4f7fb;font-family:Arial,Helvetica,sans-serif}
+header{background:#0c1728;border-bottom:1px solid #263b58;padding:18px 7%}
+header a{color:#48d7ff;text-decoration:none;font-weight:800}
+main{max-width:1150px;margin:auto;padding:35px 18px 70px}
+.hero,.panel,.resource{background:#101d31;border:1px solid #263b58;border-radius:14px;padding:25px;margin-bottom:20px}
+.hero{background:linear-gradient(135deg,#142b48,#101d31)}
+.eyebrow{color:#48d7ff;font-size:11px;font-weight:800;letter-spacing:2px}
+h1{font-size:clamp(30px,5vw,50px);margin:10px 0}
+h2{color:#48d7ff}
+.muted{color:#aab8ca}
+.filters{display:grid;grid-template-columns:1fr 220px 220px;gap:10px;margin-bottom:20px}
+input,select{width:100%;padding:12px;border-radius:7px;border:1px solid #345b7d;background:#0b1628;color:#f4f7fb}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.resource{margin:0}
+.resource h3{margin-bottom:7px}
+.tag{display:inline-block;padding:4px 8px;border-radius:20px;background:#17314d;color:#48d7ff;font-size:11px;margin-bottom:12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
+button,a.btn{border:0;border-radius:7px;padding:10px 14px;background:#48d7ff;color:#06111b;font-weight:800;cursor:pointer;text-decoration:none}
+.secondary{background:#17314d!important;color:#48d7ff!important;border:1px solid #345b7d!important}
+@media(max-width:900px){.filters{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.filters{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
+</style>
+    <link rel="stylesheet" href="css/final-polish.css">
+    <link rel="manifest" href="manifest.webmanifest">
+</head>
+<body>
+<header><a href="index.html">&larr; Back to Ronaldo's Study Hub</a></header>
+<main>
+<section class="hero">
+<p class="eyebrow">PHASE 6 | NOTES AND DOWNLOADS</p>
+<h1>Premium Resource Centre</h1>
+<p class="muted">Browse your local chapter PDFs and resources. Everything here is stored inside your website folder.</p>
+</section>
+
+<section class="panel">
+<div class="filters">
+<input id="search" placeholder="Search resources..." oninput="render()">
+<select id="subject" onchange="render()">
+<option value="All">All Subjects</option>
+<option value="Social Science">Social Science</option>
+<option value="Geography">Geography</option>
+<option value="History">History</option>
+<option value="Political Science">Political Science</option>
+<option value="Economics">Economics</option>
+</select>
+<select id="type" onchange="render()">
+<option value="All">All Types</option>
+<option value="PDF">PDF</option>
+<option value="Image">Image</option>
+</select>
+</div>
+<div class="grid" id="resources"></div>
+</section>
+</main>
+
+<script>
+const resources=[
+{title:"Understanding Social Science",subject:"Social Science",type:"PDF",path:"materials/iest1dd/iest101.pdf",desc:"Original uploaded chapter PDF."},
+{title:"Shaping of the Earth's Surface",subject:"Geography",type:"PDF",path:"materials/iest1dd/iest102.pdf",desc:"Original uploaded chapter PDF."},
+{title:"Atmosphere and Climate",subject:"Geography",type:"PDF",path:"materials/iest1dd/iest103.pdf",desc:"Original uploaded chapter PDF."},
+{title:"Early Humans and Beginning of Civilisation",subject:"History",type:"PDF",path:"materials/iest1dd/iest104.pdf",desc:"Original uploaded chapter PDF."},
+{title:"State and Society up to 1000 CE",subject:"History",type:"PDF",path:"materials/iest1dd/iest105.pdf",desc:"Original uploaded chapter PDF."},
+{title:"Democracy",subject:"Political Science",type:"PDF",path:"materials/iest1dd/iest106.pdf",desc:"Original uploaded chapter PDF."},
+{title:"Elections",subject:"Political Science",type:"PDF",path:"materials/iest1dd/iest107.pdf",desc:"Original uploaded chapter PDF."},
+{title:"Building Blocks in Economics",subject:"Economics",type:"PDF",path:"materials/iest1dd/iest108.pdf",desc:"Original uploaded chapter PDF."},
+{title:"The Price Puzzle",subject:"Economics",type:"PDF",path:"materials/iest1dd/iest109.pdf",desc:"Original uploaded chapter PDF."},
+{title:"Study Image Resource",subject:"Social Science",type:"Image",path:"materials/iest1dd/iest1cc.jpg",desc:"Original uploaded image resource."}
+];
+
+function render(){
+    const q=document.getElementById("search").value.toLowerCase().trim();
+    const subject=document.getElementById("subject").value;
+    const type=document.getElementById("type").value;
+
+    const list=resources.filter(r=>{
+        return (subject==="All"||r.subject===subject)
+            && (type==="All"||r.type===type)
+            && r.title.toLowerCase().includes(q);
+    });
+
+    document.getElementById("resources").innerHTML=list.length
+        ? list.map(r=>`
+            <article class="resource">
+                <span class="tag">${r.type}</span>
+                <h3>${escapeHtml(r.title)}</h3>
+                <p class="muted">${escapeHtml(r.desc)}</p>
+                <p class="muted">${escapeHtml(r.subject)}</p>
+                <div class="actions">
+                    <a class="btn" href="${r.path}" target="_blank">Preview</a>
+                    <a class="btn secondary" href="${r.path}" download>Download</a>
+                </div>
+            </article>
+        `).join("")
+        : '<p class="muted">No matching resources.</p>';
+}
+
+function escapeHtml(v){
+    return String(v).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+}
+
+render();
+</script>
+<script src="js/global.js"></script>
+</body>
+</html>
+

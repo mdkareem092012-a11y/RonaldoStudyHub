@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcards | Ronaldo's Study Hub</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#07111f;color:#f4f7fb;font-family:Arial,Helvetica,sans-serif}
+header{background:#0c1728;border-bottom:1px solid #263b58;padding:18px 7%}
+header a{color:#48d7ff;text-decoration:none;font-weight:800}
+main{max-width:1050px;margin:auto;padding:35px 18px 70px}
+.hero,.panel,.flashcard{background:#101d31;border:1px solid #263b58;border-radius:14px}
+.hero{padding:30px;margin-bottom:22px;background:linear-gradient(135deg,#142b48,#101d31)}
+.eyebrow{color:#48d7ff;font-size:11px;font-weight:800;letter-spacing:2px}
+h1{font-size:clamp(30px,5vw,50px);margin:10px 0}
+h2{color:#48d7ff}
+.muted{color:#aab8ca}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+select,button{font:inherit}
+select{background:#101d31;color:#f4f7fb;border:1px solid #345b7d;border-radius:7px;padding:10px 13px}
+button{border:0;border-radius:7px;padding:11px 17px;background:#48d7ff;color:#06111b;font-weight:800;cursor:pointer}
+.secondary{background:#17314d;color:#48d7ff;border:1px solid #345b7d}
+.flashcard{min-height:330px;padding:35px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.card-label{color:#e7ba63;font-size:11px;font-weight:800;letter-spacing:2px}
+.term{font-size:36px;color:#48d7ff;margin:20px 0}
+.definition{max-width:760px;font-size:18px;color:#d3deec}
+.card-stats{text-align:center;color:#aab8ca;margin:14px 0}
+.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:20px}
+.progress{height:8px;background:#17314d;border-radius:99px;overflow:hidden;margin-top:20px}
+.fill{height:100%;background:linear-gradient(90deg,#48d7ff,#e7ba63)}
+</style>
+    <link rel="stylesheet" href="css/final-polish.css">
+    <link rel="manifest" href="manifest.webmanifest">
+</head>
+<body>
+<header><a href="index.html">&larr; Back to Ronaldo's Study Hub</a></header>
+<main>
+<section class="hero">
+<p class="eyebrow">PHASE 5 | LEARNING TOOLS</p>
+<h1>Flashcards</h1>
+<p class="muted">Flip through definitions, concepts, facts and important terms.</p>
+</section>
+
+<section class="controls">
+<select id="subjectFilter" onchange="resetDeck()">
+<option value="All">All Subjects</option>
+<option value="History">History</option>
+<option value="Geography">Geography</option>
+<option value="Political Science">Political Science</option>
+<option value="Economics">Economics</option>
+<option value="Social Science">Social Science</option>
+</select>
+<button class="secondary" onclick="shuffleCards()">Shuffle</button>
+</section>
+
+<section class="flashcard" id="flashcard">
+<p class="card-label" id="cardSubject">SUBJECT</p>
+<div class="term" id="cardTerm">Loading...</div>
+<div class="definition" id="cardDefinition">Loading...</div>
+<div class="actions">
+<button onclick="prevCard()">Previous</button>
+<button onclick="nextCard()">Next</button>
+<button class="secondary" onclick="markKnown()">I Know This</button>
+</div>
+</section>
+
+<div class="card-stats" id="cardStats"></div>
+<div class="progress"><div class="fill" id="progressFill" style="width:0%"></div></div>
+</main>
+
+<script>
+const ALL_CARDS = [
+{subject:"Social Science",term:"Social Science",definition:"The systematic study of human society, relationships, institutions, cultures and human interaction with the environment."},
+{subject:"Social Science",term:"Evidence",definition:"Information or material used to support an explanation or conclusion."},
+{subject:"Geography",term:"Landform",definition:"A natural feature on the Earth's surface formed by processes such as weathering, erosion, deposition and crustal movement."},
+{subject:"Geography",term:"Plate Tectonics",definition:"The theory that Earth's lithosphere is divided into plates that move slowly and interact."},
+{subject:"Geography",term:"Lithosphere",definition:"The rigid outer part of Earth made up of the crust and uppermost mantle."},
+{subject:"Geography",term:"Weathering",definition:"The breakdown of rocks in place."},
+{subject:"Geography",term:"Erosion",definition:"The wearing away and removal of material by agents such as running water, wind, glaciers or waves."},
+{subject:"Geography",term:"Troposphere",definition:"The lowest major atmospheric layer where most weather phenomena occur."},
+{subject:"Geography",term:"Climate",definition:"The long-term pattern of weather in a region."},
+{subject:"History",term:"Archaeology",definition:"The study of the past through material remains such as tools, structures, pottery, bones and other evidence."},
+{subject:"History",term:"Civilisation",definition:"A complex human society with organised settlements, institutions, specialised activities and cultural developments."},
+{subject:"History",term:"State",definition:"A political organisation with authority over a territory and population."},
+{subject:"History",term:"Dharma",definition:"A historical concept discussed in relation to duty, ethical order and social responsibilities."},
+{subject:"Political Science",term:"Democracy",definition:"A form of government in which political power and authority ultimately rests with citizens."},
+{subject:"Political Science",term:"Citizen",definition:"A member of a political community with rights and duties."},
+{subject:"Political Science",term:"Representation",definition:"A system in which people choose others to act or make decisions on their behalf."},
+{subject:"Political Science",term:"Direct Election",definition:"An election in which citizens vote directly to choose representatives or leaders."},
+{subject:"Economics",term:"Scarcity",definition:"A situation in which available resources are limited relative to wants."},
+{subject:"Economics",term:"Opportunity Cost",definition:"The value of the next-best alternative given up when a choice is made."},
+{subject:"Economics",term:"Demand",definition:"The quantity of a product people are willing and able to buy at a particular price."},
+{subject:"Economics",term:"Supply",definition:"The quantity of a product producers are willing and able to offer for sale."},
+{subject:"Economics",term:"Market Equilibrium",definition:"A situation in which quantity demanded equals quantity supplied."}
+];
+
+let cards = [...ALL_CARDS];
+let index = 0;
+let known = JSON.parse(localStorage.getItem("ronaldoFlashcardsKnown") || "[]");
+
+function filteredCards(){
+    const subject = document.getElementById("subjectFilter").value;
+    return subject === "All" ? cards : cards.filter(c => c.subject === subject);
+}
+
+function render(){
+    const deck = filteredCards();
+    if(index >= deck.length) index = 0;
+    if(index < 0) index = deck.length - 1;
+
+    if(!deck.length){
+        document.getElementById("cardTerm").textContent = "No cards";
+        document.getElementById("cardDefinition").textContent = "No cards available for this subject.";
+        return;
+    }
+
+    const card = deck[index];
+    document.getElementById("cardSubject").textContent = card.subject.toUpperCase();
+    document.getElementById("cardTerm").textContent = card.term;
+    document.getElementById("cardDefinition").textContent = card.definition;
+    document.getElementById("cardStats").textContent = `Card ${index+1} of ${deck.length} | Known: ${known.length}`;
+    document.getElementById("progressFill").style.width = `${((index+1)/deck.length)*100}%`;
+}
+
+function nextCard(){ index++; render(); }
+function prevCard(){ index--; render(); }
+
+function resetDeck(){ index = 0; render(); }
+
+function shuffleCards(){
+    cards.sort(() => Math.random() - 0.5);
+    index = 0;
+    render();
+}
+
+function markKnown(){
+    const deck = filteredCards();
+    if(!deck.length) return;
+    const key = deck[index].term;
+    if(!known.includes(key)){
+        known.push(key);
+        localStorage.setItem("ronaldoFlashcardsKnown", JSON.stringify(known));
+    }
+    nextCard();
+}
+
+render();
+</script>
+<script src="js/global.js"></script>
+</body>
+</html>
+

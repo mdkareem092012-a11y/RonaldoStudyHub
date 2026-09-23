@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>
+Settings | Ronaldo's Study Hub
+</title>
+
+<link
+    rel="stylesheet"
+    href="css/style.css">
+
+<link
+    rel="stylesheet"
+    href="css/final-polish.css">
+
+    <link rel="manifest" href="manifest.webmanifest">
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+<a
+    href="index.html"
+    class="brand">
+
+RONALDO'S
+<span>STUDY HUB</span>
+
+</a>
+
+
+<a href="index.html">
+
+Back to Home
+
+</a>
+
+</header>
+
+
+<main class="section">
+
+
+<div class="section-heading">
+
+<p class="eyebrow">
+PHASE 7 | SETTINGS
+</p>
+
+<h2>
+Study Hub Settings
+</h2>
+
+<p>
+Manage appearance and your local study data.
+</p>
+
+</div>
+
+
+<div
+    class="progress-card"
+    style="
+        max-width:850px;
+        margin:auto;
+    ">
+
+
+<h3>
+Appearance
+</h3>
+
+
+<button
+    class="primary-button"
+    onclick="toggleTheme()">
+
+Toggle Dark / Light Mode
+
+</button>
+
+
+<h3
+    style="margin-top:35px;">
+
+Data Management
+
+</h3>
+
+
+<p class="muted">
+
+Your study progress, test history,
+planner tasks, flashcard data and
+preferences are saved locally in
+this browser.
+
+</p>
+
+
+<div
+    style="
+        display:flex;
+        gap:10px;
+        flex-wrap:wrap;
+        margin-top:15px;
+    ">
+
+
+<button
+    class="primary-button"
+    onclick="exportStudyData()">
+
+Export Backup
+
+</button>
+
+
+<label
+    class="secondary-button"
+    style="cursor:pointer;">
+
+Import Backup
+
+<input
+    type="file"
+    accept=".json"
+    onchange="importStudyData(this.files[0])"
+    style="display:none;">
+
+</label>
+
+
+<button
+    class="secondary-button"
+    onclick="resetStudyData()">
+
+Reset Local Data
+
+</button>
+
+
+</div>
+
+
+<h3
+    style="margin-top:35px;">
+
+Offline Support
+
+</h3>
+
+
+<p class="muted">
+
+The Study Hub includes a Service Worker
+and web app manifest for offline-friendly
+use when served from a compatible
+HTTP or HTTPS environment.
+
+Opening HTML files directly with
+file:// still works, but Chrome does
+not enable Service Worker installation
+from file:// pages.
+
+</p>
+
+
+</div>
+
+</main>
+
+
+<script src="js/global.js"></script>
+
+</body>
+
+</html>
+

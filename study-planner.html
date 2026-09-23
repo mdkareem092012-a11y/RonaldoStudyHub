@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Planner | Ronaldo's Study Hub</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#07111f;color:#f4f7fb;font-family:Arial,Helvetica,sans-serif}
+header{background:#0c1728;border-bottom:1px solid #263b58;padding:18px 7%}
+header a{color:#48d7ff;text-decoration:none;font-weight:800}
+main{max-width:1120px;margin:auto;padding:35px 18px 70px}
+.hero,.panel{background:#101d31;border:1px solid #263b58;border-radius:14px;padding:25px;margin-bottom:20px}
+.hero{background:linear-gradient(135deg,#142b48,#101d31)}
+.eyebrow{color:#48d7ff;font-size:11px;font-weight:800;letter-spacing:2px}
+h1{font-size:clamp(30px,5vw,50px);margin:10px 0}
+h2{color:#48d7ff}
+.muted{color:#aab8ca}
+.form-grid{display:grid;grid-template-columns:1.3fr .7fr .7fr .8fr;gap:10px}
+input,select{width:100%;padding:12px;border-radius:7px;border:1px solid #345b7d;background:#0b1628;color:#f4f7fb}
+button{border:0;border-radius:7px;padding:11px 17px;background:#48d7ff;color:#06111b;font-weight:800;cursor:pointer}
+.secondary{background:#17314d;color:#48d7ff;border:1px solid #345b7d}
+.task{display:grid;grid-template-columns:1fr auto;gap:15px;padding:14px 0;border-bottom:1px solid #263b58}
+.task:last-child{border-bottom:0}
+.task-title{font-weight:800}
+.task.done .task-title{text-decoration:line-through;color:#7f91a7}
+.task-meta{font-size:12px;color:#9eacc1}
+.badge{display:inline-block;padding:4px 8px;border-radius:20px;background:#17314d;color:#48d7ff;font-size:11px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+.countdown{font-size:28px;color:#e7ba63;font-weight:900}
+@media(max-width:850px){.form-grid{grid-template-columns:1fr 1fr}.task{grid-template-columns:1fr}}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr}}
+</style>
+    <link rel="stylesheet" href="css/final-polish.css">
+    <link rel="manifest" href="manifest.webmanifest">
+</head>
+<body>
+<header><a href="index.html">&larr; Back to Ronaldo's Study Hub</a></header>
+<main>
+<section class="hero">
+<p class="eyebrow">PHASE 6 | STUDY PLANNER</p>
+<h1>Plan Your Study Time</h1>
+<p class="muted">Create daily tasks, set a study time, mark work complete, and keep everything saved in this browser.</p>
+</section>
+
+<section class="panel">
+<h2>Add a Study Task</h2>
+<div class="form-grid">
+<input id="taskInput" placeholder="Example: Revise Democracy">
+<select id="subjectInput">
+<option>History</option>
+<option>Geography</option>
+<option>Political Science</option>
+<option>Economics</option>
+<option>Social Science</option>
+</select>
+<select id="durationInput">
+<option value="15">15 minutes</option>
+<option value="30">30 minutes</option>
+<option value="45">45 minutes</option>
+<option value="60">60 minutes</option>
+<option value="90">90 minutes</option>
+</select>
+<input id="dateInput" type="date">
+</div>
+<div class="actions">
+<button onclick="addTask()">Add Task</button>
+<button class="secondary" onclick="addStarterPlan()">Add Sample Daily Plan</button>
+</div>
+</section>
+
+<section class="panel">
+<h2>Exam Countdown</h2>
+<p class="muted">Set a target exam date for your local planner.</p>
+<div class="form-grid">
+<input id="examDate" type="date">
+<input id="examName" placeholder="Example: Social Science Exam">
+<button onclick="saveExam()">Save Exam</button>
+<button class="secondary" onclick="clearExam()">Clear</button>
+</div>
+<p id="countdown" class="countdown">No exam date set.</p>
+</section>
+
+<section class="panel">
+<h2>Today's Tasks</h2>
+<div id="todayTasks"></div>
+</section>
+
+<section class="panel">
+<h2>All Planned Tasks</h2>
+<div id="allTasks"></div>
+</section>
+</main>
+
+<script>
+let tasks = [];
+try { tasks = JSON.parse(localStorage.getItem("ronaldoStudyTasks")) || []; } catch { tasks=[]; }
+
+function saveTasks(){ localStorage.setItem("ronaldoStudyTasks",JSON.stringify(tasks)); render(); }
+
+function addTask(){
+    const title=document.getElementById("taskInput").value.trim();
+    const subject=document.getElementById("subjectInput").value;
+    const duration=Number(document.getElementById("durationInput").value);
+    const date=document.getElementById("dateInput").value || new Date().toISOString().slice(0,10);
+
+    if(!title){ alert("Enter a study task first."); return; }
+
+    tasks.push({
+        id:Date.now(),
+        title,subject,duration,date,done:false
+    });
+
+    document.getElementById("taskInput").value="";
+    saveTasks();
+}
+
+function addStarterPlan(){
+    const today=new Date().toISOString().slice(0,10);
+    tasks.push(
+        {id:Date.now()+1,title:"History revision",subject:"History",duration:30,date:today,done:false},
+        {id:Date.now()+2,title:"Geography revision",subject:"Geography",duration:30,date:today,done:false},
+        {id:Date.now()+3,title:"Economics MCQs",subject:"Economics",duration:20,date:today,done:false},
+        {id:Date.now()+4,title:"Review yesterday's mistakes",subject:"Social Science",duration:15,date:today,done:false}
+    );
+    saveTasks();
+}
+
+function toggleTask(id){
+    const task=tasks.find(x=>x.id===id);
+    if(task) task.done=!task.done;
+    saveTasks();
+}
+
+function deleteTask(id){
+    tasks=tasks.filter(x=>x.id!==id);
+    saveTasks();
+}
+
+function taskHtml(task){
+    return `
+    <div class="task ${task.done?'done':''}">
+        <div>
+            <div class="task-title">${escapeHtml(task.title)}</div>
+            <div class="task-meta">
+                <span class="badge">${escapeHtml(task.subject)}</span>
+                &nbsp; ${task.duration} minutes &nbsp; | &nbsp; ${task.date}
+            </div>
+        </div>
+        <div>
+            <button onclick="toggleTask(${task.id})">${task.done?'Undo':'Done'}</button>
+            <button class="secondary" onclick="deleteTask(${task.id})">Delete</button>
+        </div>
+    </div>`;
+}
+
+function render(){
+    const today=new Date().toISOString().slice(0,10);
+    document.getElementById("todayTasks").innerHTML =
+        tasks.filter(t=>t.date===today).length
+        ? tasks.filter(t=>t.date===today).map(taskHtml).join("")
+        : '<p class="muted">No tasks planned for today.</p>';
+
+    document.getElementById("allTasks").innerHTML =
+        tasks.length
+        ? tasks.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(taskHtml).join("")
+        : '<p class="muted">No tasks yet.</p>';
+}
+
+function saveExam(){
+    const date=document.getElementById("examDate").value;
+    const name=document.getElementById("examName").value.trim() || "Social Science Exam";
+    if(!date){alert("Choose an exam date.");return;}
+    localStorage.setItem("ronaldoExamDate",date);
+    localStorage.setItem("ronaldoExamName",name);
+    updateCountdown();
+}
+
+function clearExam(){
+    localStorage.removeItem("ronaldoExamDate");
+    localStorage.removeItem("ronaldoExamName");
+    updateCountdown();
+}
+
+function updateCountdown(){
+    const date=localStorage.getItem("ronaldoExamDate");
+    const name=localStorage.getItem("ronaldoExamName") || "Social Science Exam";
+    const out=document.getElementById("countdown");
+
+    if(!date){ out.textContent="No exam date set."; return; }
+
+    const target=new Date(date+"T00:00:00");
+    const now=new Date();
+    const diff=target-now;
+    const days=Math.ceil(diff/86400000);
+
+    if(days<0) out.textContent=name+" has passed.";
+    else if(days===0) out.textContent=name+" is today.";
+    else out.textContent=name+" - "+days+" day(s) remaining.";
+}
+
+function escapeHtml(value){
+    return String(value).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+}
+
+const today=new Date().toISOString().slice(0,10);
+document.getElementById("dateInput").value=today;
+document.getElementById("examDate").value=localStorage.getItem("ronaldoExamDate") || "";
+document.getElementById("examName").value=localStorage.getItem("ronaldoExamName") || "";
+
+render();
+updateCountdown();
+setInterval(updateCountdown,60000);
+</script>
+<script src="js/global.js"></script>
+</body>
+</html>
+

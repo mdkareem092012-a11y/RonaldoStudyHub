@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Dashboard | Ronaldo's Study Hub</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#07111f;color:#f4f7fb;font-family:Arial,Helvetica,sans-serif}
+header{position:sticky;top:0;z-index:20;background:#0c1728;border-bottom:1px solid #263b58;padding:18px 7%}
+header a{color:#48d7ff;text-decoration:none;font-weight:800}
+main{max-width:1180px;margin:auto;padding:35px 18px 70px}
+.hero,.panel,.stat,.subject-card,.recent-card{background:#101d31;border:1px solid #263b58;border-radius:14px}
+.hero{padding:30px;margin-bottom:20px;background:linear-gradient(135deg,#142b48,#101d31)}
+.eyebrow{color:#48d7ff;font-size:11px;font-weight:800;letter-spacing:2px}
+h1{font-size:clamp(32px,5vw,52px);margin:9px 0;line-height:1.15}
+h2{color:#48d7ff}
+.muted{color:#aab8ca}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:20px}
+.stat{padding:22px}
+.stat strong{display:block;color:#48d7ff;font-size:32px}
+.stat span{color:#aab8ca;font-size:13px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.panel{padding:24px}
+.progress-row{margin:16px 0}
+.progress-label{display:flex;justify-content:space-between;margin-bottom:7px}
+.progress-label span{color:#aab8ca}
+.progress-label strong{color:#48d7ff}
+.track{height:10px;background:#17314d;border-radius:20px;overflow:hidden}
+.fill{height:100%;background:linear-gradient(90deg,#48d7ff,#e7ba63);border-radius:20px;transition:.4s}
+.subject-row{padding:14px 0;border-bottom:1px solid #263b58}
+.subject-row:last-child{border-bottom:0}
+.recent{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.recent-card{padding:18px}
+.recent-card h3{margin:8px 0}
+.recent-card a{color:#48d7ff;text-decoration:none;font-weight:800;font-size:13px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.btn{display:inline-block;padding:11px 17px;border-radius:7px;background:#48d7ff;color:#06111b;text-decoration:none;font-weight:800;border:0;cursor:pointer}
+.secondary{background:#17314d;color:#48d7ff;border:1px solid #345b7d}
+.empty{padding:14px;background:#0b1628;border-radius:8px;color:#aab8ca}
+footer{text-align:center;padding:35px 15px;background:#0c1728;border-top:1px solid #263b58;color:#9eacc1}
+footer strong{color:#48d7ff}
+@media(max-width:950px){.stats{grid-template-columns:repeat(2,1fr)}.recent{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid2,.recent{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.stats{grid-template-columns:1fr}}
+</style>
+    <link rel="stylesheet" href="css/final-polish.css">
+    <link rel="manifest" href="manifest.webmanifest">
+</head>
+
+<body>
+
+<header>
+<a href="index.html">&larr; Back to Ronaldo's Study Hub</a>
+</header>
+
+<main>
+
+<section class="hero">
+<p class="eyebrow">PHASE 4 | STUDENT DASHBOARD</p>
+<h1>Your Learning Progress</h1>
+<p class="muted">
+Track completed chapters, test performance, study streaks,
+subject progress and recently studied chapters. Your data
+stays in this browser.
+</p>
+
+<div class="actions">
+<a class="btn" href="test-center.html">Open Test Centre</a>
+<a class="btn secondary" href="daily-challenge.html">Daily Challenge</a>
+<a class="btn secondary" href="index.html#chapters">Study Chapters</a>
+</div>
+</section>
+
+
+<section class="stats">
+
+<div class="stat">
+<strong id="overallPercent">0%</strong>
+<span>Overall Completion</span>
+</div>
+
+<div class="stat">
+<strong id="completedCount">0</strong>
+<span>Completed Chapters</span>
+</div>
+
+<div class="stat">
+<strong id="bestScore">0%</strong>
+<span>Best Test Score</span>
+</div>
+
+<div class="stat">
+<strong id="streak">0</strong>
+<span>Study Streak</span>
+</div>
+
+</section>
+
+
+<div class="grid2">
+
+<section class="panel">
+<h2>Overall Progress</h2>
+
+<div class="progress-row">
+<div class="progress-label">
+<span>Chapters Completed</span>
+<strong id="overallLabel">0%</strong>
+</div>
+
+<div class="track">
+<div class="fill" id="overallBar" style="width:0%"></div>
+</div>
+</div>
+
+<p class="muted" id="completionText">
+0 of 9 chapters completed.
+</p>
+</section>
+
+
+<section class="panel">
+<h2>Study Summary</h2>
+
+<div class="subject-row">
+<strong>Daily Challenge</strong>
+<div class="muted" id="dailyScore">
+Not attempted
+</div>
+</div>
+
+<div class="subject-row">
+<strong>Last Studied</strong>
+<div class="muted" id="lastStudied">
+No chapter recorded yet
+</div>
+</div>
+
+<div class="subject-row">
+<strong>Tests Taken</strong>
+<div class="muted" id="testsTaken">
+0
+</div>
+</div>
+</section>
+
+</div>
+
+
+<div class="grid2">
+
+<section class="panel">
+<h2>Subject Progress</h2>
+<div id="subjectProgress"></div>
+</section>
+
+
+<section class="panel">
+<h2>Performance Overview</h2>
+<div id="performance"></div>
+</section>
+
+</div>
+
+
+<section class="panel">
+<h2>Recently Studied Chapters</h2>
+<div class="recent" id="recentChapters"></div>
+</section>
+
+</main>
+
+
+<footer>
+<strong>RONALDO'S CLASS 9 SOCIAL SCIENCE STUDY HUB</strong><br>
+Explore. Learn. Practise. Achieve.<br>
+Made by Ronaldo
+</footer>
+
+<script src="js/dashboard.js"></script>
+
+<script src="js/global.js"></script>
+</body>
+</html>
+

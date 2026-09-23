@@ -1,0 +1,496 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Study Challenge | Ronaldo's Study Hub</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    background:#07111f;
+    color:#f4f7fb;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+header{
+    background:#0c1728;
+    border-bottom:1px solid #263b58;
+    padding:20px 7%;
+}
+
+header a{
+    color:#48d7ff;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+main{
+    max-width:950px;
+    margin:auto;
+    padding:40px 18px 70px;
+}
+
+.hero,
+.question-box,
+.result-box{
+    background:#101d31;
+    border:1px solid #263b58;
+    border-radius:14px;
+    padding:28px;
+    margin-bottom:20px;
+}
+
+.hero{
+    background:linear-gradient(135deg,#142b48,#101d31);
+}
+
+.eyebrow{
+    color:#48d7ff;
+    font-size:11px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+h1{
+    font-size:clamp(32px,5vw,52px);
+    margin:10px 0;
+    line-height:1.15;
+}
+
+h2{
+    color:#48d7ff;
+}
+
+.muted{
+    color:#aab8ca;
+}
+
+.timer{
+    display:inline-block;
+    padding:9px 14px;
+    background:#17314d;
+    color:#48d7ff;
+    border-radius:7px;
+    font-weight:bold;
+}
+
+.question{
+    margin-top:15px;
+    padding:20px;
+    background:#0b1628;
+    border:1px solid #223753;
+    border-radius:10px;
+}
+
+.question-text{
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.option{
+    display:block;
+    padding:10px;
+    margin:7px 0;
+    background:#101d31;
+    border-radius:7px;
+}
+
+button{
+    border:0;
+    border-radius:7px;
+    padding:12px 18px;
+    background:#48d7ff;
+    color:#06111b;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:20px;
+}
+
+.secondary{
+    background:#17314d;
+    color:#48d7ff;
+    border:1px solid #345b7d;
+    margin-left:8px;
+}
+
+.result-score{
+    font-size:44px;
+    color:#48d7ff;
+    font-weight:bold;
+}
+
+.correct{
+    color:#68dca1;
+    font-weight:bold;
+}
+
+.incorrect{
+    color:#ff9c91;
+    font-weight:bold;
+}
+
+.hidden{
+    display:none;
+}
+
+@media(max-width:600px){
+    main{
+        padding:25px 12px 55px;
+    }
+
+    .hero,
+    .question-box,
+    .result-box{
+        padding:20px;
+    }
+}
+</style>
+    <link rel="stylesheet" href="css/final-polish.css">
+    <link rel="manifest" href="manifest.webmanifest">
+</head>
+
+<body>
+
+<header>
+<a href="index.html">&larr; Back to Ronaldo's Study Hub</a>
+</header>
+
+<main>
+
+<section class="hero">
+
+<p class="eyebrow">DAILY STUDY CHALLENGE</p>
+
+<h1>10 Questions. One Focus.</h1>
+
+<p class="muted">
+Complete today's Social Science challenge and check your score immediately.
+</p>
+
+<p class="timer" id="timer">05:00</p>
+
+</section>
+
+<section class="question-box" id="quizArea"></section>
+
+<section class="result-box hidden" id="resultBox">
+
+<h2>Challenge Complete</h2>
+
+<div class="result-score" id="score">0%</div>
+
+<p id="resultText"></p>
+
+<div id="review"></div>
+
+</section>
+
+<button id="submitButton" onclick="submitChallenge()">
+Submit Challenge
+</button>
+
+<button class="secondary" onclick="location.href='index.html'">
+Home
+</button>
+
+</main>
+
+<script>
+
+const questions = [
+    {
+        q: "Which discipline studies the past?",
+        o: ["History", "Geography", "Economics", "Political Science"],
+        a: 0,
+        e: "History studies the past and change over time."
+    },
+    {
+        q: "Which process breaks rocks down in place?",
+        o: ["Erosion", "Weathering", "Deposition", "Transportation"],
+        a: 1,
+        e: "Weathering is the breakdown of rocks in place."
+    },
+    {
+        q: "Most weather occurs in which atmospheric layer?",
+        o: ["Stratosphere", "Troposphere", "Mesosphere", "Exosphere"],
+        a: 1,
+        e: "Most weather phenomena occur in the troposphere."
+    },
+    {
+        q: "What is democracy?",
+        o: [
+            "A form of government based on citizen political power",
+            "A type of market",
+            "A landform",
+            "A historical source"
+        ],
+        a: 0,
+        e: "Democracy places political authority with citizens."
+    },
+    {
+        q: "What does an election allow citizens to do?",
+        o: [
+            "Choose representatives",
+            "Stop all laws",
+            "End public debate",
+            "Remove all institutions"
+        ],
+        a: 0,
+        e: "Elections allow citizens to choose representatives."
+    },
+    {
+        q: "What is scarcity?",
+        o: [
+            "Unlimited resources",
+            "Limited resources relative to wants",
+            "No human wants",
+            "No choices"
+        ],
+        a: 1,
+        e: "Scarcity exists because resources are limited relative to wants."
+    },
+    {
+        q: "What is opportunity cost?",
+        o: [
+            "Total income",
+            "The next-best alternative given up",
+            "Total production",
+            "Market supply"
+        ],
+        a: 1,
+        e: "Opportunity cost is the value of the next-best alternative."
+    },
+    {
+        q: "What is demand?",
+        o: [
+            "A desire only",
+            "The quantity people are willing and able to buy",
+            "The quantity sellers produce",
+            "A government order"
+        ],
+        a: 1,
+        e: "Demand requires willingness and ability to buy."
+    },
+    {
+        q: "What is market equilibrium?",
+        o: [
+            "When demand is zero",
+            "When supply is zero",
+            "When quantity demanded equals quantity supplied",
+            "When every price is identical"
+        ],
+        a: 2,
+        e: "Equilibrium occurs when quantity demanded equals quantity supplied."
+    },
+    {
+        q: "Which is historical evidence?",
+        o: [
+            "A coin",
+            "A weather forecast",
+            "A modern advertisement",
+            "A random guess"
+        ],
+        a: 0,
+        e: "Coins are material historical evidence."
+    }
+];
+
+let timeLeft = 300;
+let timerStarted = true;
+let timerId = null;
+
+function loadQuestions(){
+
+    const area = document.getElementById("quizArea");
+
+    area.innerHTML = questions.map(function(item,index){
+
+        return `
+        <div class="question">
+
+            <div class="question-text">
+                ${index + 1}. ${item.q}
+            </div>
+
+            ${item.o.map(function(option,optionIndex){
+
+                return `
+                <label class="option">
+
+                    <input
+                        type="radio"
+                        name="q${index}"
+                        value="${optionIndex}">
+
+                    ${String.fromCharCode(65 + optionIndex)}.
+                    ${option}
+
+                </label>
+                `;
+
+            }).join("")}
+
+        </div>
+        `;
+
+    }).join("");
+
+}
+
+function updateTimer(){
+
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+
+    document.getElementById("timer").textContent =
+        String(minutes).padStart(2,"0") +
+        ":" +
+        String(seconds).padStart(2,"0");
+}
+
+function startTimer(){
+
+    updateTimer();
+
+    timerId = setInterval(function(){
+
+        if(!timerStarted){
+            return;
+        }
+
+        timeLeft--;
+
+        updateTimer();
+
+        if(timeLeft <= 0){
+
+            clearInterval(timerId);
+
+            timerStarted = false;
+
+            submitChallenge(true);
+        }
+
+    },1000);
+}
+
+function submitChallenge(autoSubmit){
+
+    if(!timerStarted && !autoSubmit){
+        return;
+    }
+
+    if(timerId){
+        clearInterval(timerId);
+    }
+
+    timerStarted = false;
+
+    let score = 0;
+    let review = "";
+
+    questions.forEach(function(item,index){
+
+        const selected = document.querySelector(
+            'input[name="q' + index + '"]:checked'
+        );
+
+        const selectedValue =
+            selected ? Number(selected.value) : -1;
+
+        const correct =
+            selectedValue === item.a;
+
+        if(correct){
+            score++;
+        }
+
+        review += `
+        <div style="
+            margin-top:15px;
+            padding-top:15px;
+            border-top:1px solid #263b58;
+        ">
+
+            <strong>
+                Q${index + 1}. ${item.q}
+            </strong>
+
+            <p class="${correct ? "correct" : "incorrect"}">
+                ${correct ? "Correct" : "Needs Review"}
+            </p>
+
+            <p class="muted">
+                Your answer:
+                ${selectedValue === -1
+                    ? "Not answered"
+                    : item.o[selectedValue]}
+            </p>
+
+            <p class="muted">
+                Correct answer:
+                ${item.o[item.a]}
+            </p>
+
+            <p class="muted">
+                ${item.e}
+            </p>
+
+        </div>
+        `;
+    });
+
+    const percentage =
+        Math.round((score / questions.length) * 100);
+
+    localStorage.setItem(
+        "ronaldoDailyChallengeScore",
+        String(percentage)
+    );
+
+    const oldBest =
+        Number(localStorage.getItem("ronaldoBestScore") || 0);
+
+    if(percentage > oldBest){
+        localStorage.setItem(
+            "ronaldoBestScore",
+            String(percentage)
+        );
+    }
+
+    document.getElementById("score").textContent =
+        percentage + "%";
+
+    document.getElementById("resultText").textContent =
+        "You answered " +
+        score +
+        " out of " +
+        questions.length +
+        " questions correctly.";
+
+    document.getElementById("review").innerHTML =
+        review;
+
+    document.getElementById("resultBox").classList.remove("hidden");
+
+    document.getElementById("submitButton").style.display =
+        "none";
+
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+    });
+}
+
+loadQuestions();
+startTimer();
+
+</script>
+
+<script src="js/global.js"></script>
+</body>
+</html>
+
